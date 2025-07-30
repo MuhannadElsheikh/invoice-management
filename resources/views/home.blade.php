@@ -141,21 +141,9 @@
     <!-- row closed -->
 
     <!-- row opened -->
-<<<<<<< HEAD
-        <div class="col-lg-12 col-xl-12">
-=======
-    <div class="row row-sm">
-        <div class="col-md-12 col-lg-12 col-xl-7">
-            <div class="card">
-{{--
-                <div style="width:75%;">
-                    <x-chartjs-component :chart="$chart" />
-                </div> --}}
 
-            </div>
-        </div>
         <div class="col-lg-12 col-xl-5">
->>>>>>> ef2e2fc6e3d7832749c2ad237500afd81227b710
+
             <div class="card card-dashboard-map-one">
                 <label class="main-content-label">Sales Revenue by Customers in USA</label>
                 <span class="d-block mg-b-20 text-muted tx-12">Sales Performance of all states in the United States</span>
