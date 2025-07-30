@@ -169,8 +169,12 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+<<<<<<< HEAD
         Collective\Html\HtmlServiceProvider::class,
 
+=======
+        Spatie\Permission\PermissionServiceProvider::class,
+>>>>>>> ef2e2fc6e3d7832749c2ad237500afd81227b710
     ])->toArray(),
 
     /*
@@ -187,9 +191,12 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+<<<<<<< HEAD
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
 
+=======
+>>>>>>> ef2e2fc6e3d7832749c2ad237500afd81227b710
     ])->toArray(),
 
 ];
