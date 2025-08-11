@@ -37,4 +37,9 @@ class Invoices extends Model
     {
         return $this->belongsTo(Section::class);
     }
+    public function productData()
+{
+    return $this->belongsTo(Product::class, 'product'); // أو 'product_id' إذا استخدمته
+}
+
 }

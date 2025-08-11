@@ -3,20 +3,21 @@
 namespace App\Http\Controllers;
 
 
-use App\Models\Section;
-use App\Models\Invoices;
-use Illuminate\Http\Request;
 use App\Exports\InvoicesExport;
-use App\Models\Invoices_detalis;
-use Illuminate\Support\Facades\DB;
+use App\Models\Invoices;
 use App\Models\Invoices_attchments;
+use App\Models\Invoices_detalis;
+use App\Models\Product;
+use App\Models\Section;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
-
-use Maatwebsite\Excel\Facades\Excel;
 use App\Notifications\Invoice_add;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Notification;
+use Maatwebsite\Excel\Facades\Excel;
 
 class InvoicesController extends Controller
 {
@@ -61,7 +62,7 @@ class InvoicesController extends Controller
             'invoice_number' => $request->invoice_number,
             'invoice_date' => $request->invoice_date,
             'due_date' => $request->due_date,
-            'product' => 'منتج',
+            'product' =>  $request->product,
             'section_id' => $request->section_id,
             'amount_collection' => $request->amount_collection,
             'amount_commission' => $request->amount_commission,
@@ -78,7 +79,7 @@ class InvoicesController extends Controller
         Invoices_detalis::create([
             'invoices_id' => $invoice_id,
             'invoice_number' => $request->invoice_number,
-            'product' => 'منتج',
+            'product' => $request->product,
             'section' => $request->section_id,
             'status' => 'غير مدفوعة',
             'value_status' => 2,
@@ -143,7 +144,7 @@ class InvoicesController extends Controller
             'invoice_number' => $request->invoice_number,
             'invoice_date' => $request->invoice_date,
             'due_date' => $request->due_date,
-            'product' => 'منتج',
+            'product' =>  $request->product,
             'section_id' => $request->section_id,
             'amount_collection' => $request->amount_collection,
             'amount_commission' => $request->amount_commission,
@@ -162,7 +163,7 @@ class InvoicesController extends Controller
             $details->update([
                 'invoices_id' => $request->id,
                 'invoice_number' => $request->invoice_number,
-                'product' => 'منتج',
+                'product' => $request->product,
                 'section' => $request->section_id,
                 'status' => 'غير مدفوعة',
                 'value_status' => 2,
@@ -201,13 +202,13 @@ class InvoicesController extends Controller
         }
     }
 
-    public function getProducts($id)
-    {
+    public function getProducts($section_id)
+{
+    $products = Product::where('section_id', $section_id)->pluck('product_name', 'id');
 
-        $products = DB::table('products')->where('section_id', $id)->pluck('product_name', 'id');
-        dd($products);
-        return response()->json($products);
-    }
+    return response()->json($products);
+}
+
 
     public function chart_flot()
     {
@@ -247,7 +248,7 @@ class InvoicesController extends Controller
             Invoices_detalis::create([
                 'invoices_id' => $request->id,
                 'invoice_number' => $request->invoice_number,
-                'product' => 'منتج',
+                'product' =>  $request->product,
                 'section' => $request->section_id,
                 'status' => $request->status,
                 'value_status' => 1,
@@ -265,7 +266,7 @@ class InvoicesController extends Controller
             Invoices_detalis::create([
                 'invoices_id' => $request->id,
                 'invoice_number' => $request->invoice_number,
-                'product' => 'منتج',
+                'product' =>  $request->product,
                 'section' => $request->section_id,
                 'status' => $request->status,
                 'value_status' => 3,

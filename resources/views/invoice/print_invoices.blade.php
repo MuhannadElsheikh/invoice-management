@@ -76,7 +76,7 @@
                                 <tbody>
                                     <tr>
                                         <td>1</td>
-                                        <td class="tx-12">{{ $invoices->product }}</td>
+                                        <td class="tx-12">{{ $invoices->productData->product_name }}</td>
                                         <td class="tx-center">{{ number_format($invoices->amount_collection, 2) }}</td>
                                         <td class="tx-right">{{ number_format($invoices->amount_commission, 2) }}</td>
                                         @php

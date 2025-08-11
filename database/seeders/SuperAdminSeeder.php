@@ -18,9 +18,9 @@ class SuperAdminSeeder extends Seeder
         $superAdmin = User::create([
             'name' => 'Muhannad.H ',
             'email' => 'admin@gmail.com',
-            'password' => Hash::make('admin'),
-            'email' => 'muhannad@gmail.com',
-            'password' => Hash::make('123123123')
+   
+
+            'password' => Hash::make('admin')
         ]);
         $superAdmin->assignRole('Super Admin');
 
@@ -28,9 +28,9 @@ class SuperAdminSeeder extends Seeder
         $admin = User::create([
             'name' => 'Syed Ahsan Kamal',
             'email' => 'user@gmail.com',
-            'password' => Hash::make('user'),
-            'email' => 'muhannad1@gmail.com',
-            'password' => Hash::make('123123123')
+            
+
+            'password' => Hash::make('user')
         ]);
         $admin->assignRole('Admin');
     }

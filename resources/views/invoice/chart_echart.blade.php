@@ -25,20 +25,21 @@
 @endsection
 @section('content')
     <!-- row -->
- <!-- row opened --> @if (session('success'))
- <div class="alert alert-success">
-    {{ session('success') }}
-</div>
-@endif
-@if ($errors->any())
-<div class="alert alert-danger">
-    <ul>
-        @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-</div>
-@endif
+    <!-- row opened -->
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
     <div class="col-xl-12">
         <div class="card">
@@ -66,15 +67,16 @@
                         </thead>
                         <tbody>
                             @foreach ($chart_echart as $item)
-
-
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->invoice_number }}</td>
                                     <td> {{ $item->invoice_date }}</td>
                                     <td>{{ $item->due_date }}</td>
-                                    <td>{{ $item->product }}</td>
-                                    <td><a href="{{url('invoicedetalls') }}/{{$item->id}}">{{$item->section->section_name }}</a></td>
+                                    <td>{{ $item->productData->product_name ?? '—' }}</td>
+
+                                    <td><a
+                                            href="{{ url('invoicedetalls') }}/{{ $item->id }}">{{ $item->section->section_name }}</a>
+                                    </td>
                                     <td>{{ $item->discount }}</td>
                                     <td>{{ $item->rate_vat }}</td>
                                     <td>{{ $item->value_vat }} </td>
@@ -89,7 +91,7 @@
                                         @endif
                                     </td>
                                     <td>{{ $item->note }}</td>
-                                   
+
 
                                 </tr>
                             @endforeach

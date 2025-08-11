@@ -74,7 +74,8 @@
                                     <td>{{ $item->invoice_number }}</td>
                                     <td> {{ $item->invoice_date }}</td>
                                     <td>{{ $item->due_date }}</td>
-                                    <td>{{ $item->product }}</td>
+                                    <td>{{ $item->productData->product_name ?? '—' }}</td>
+
                                     <td><a
                                             href="{{ url('invoicedetalls') }}/{{ $item->id }}">{{ $item->section->section_name }}</a>
                                     </td>
@@ -106,7 +107,8 @@
                                                     @csrf
                                                     <input type="hidden" name="id" value="{{ $item->id }}">
                                                     <button type="submit"
-                                                        class="btn-sm edit-section-btn btn btn-primary">استرجاع الفاتورة </button>
+                                                        class="btn-sm edit-section-btn btn btn-primary">استرجاع الفاتورة
+                                                    </button>
                                                 </form>
 
                                                 <form action="{{ url('archive_delete', ['invoice' => $item->id]) }}"
@@ -115,7 +117,7 @@
                                                     class=" modal-effect btn-sm btn btn-danger w-100">
                                                     @csrf @method('DELETE')
                                                     <input type="hidden" name="id" value="{{ $item->id }}">
-                                                    <button type="submit" class="btn-sm btn btn-danger">حذف  </button>
+                                                    <button type="submit" class="btn-sm btn btn-danger">حذف </button>
                                                 </form>
                                             </div>
                                         </div>

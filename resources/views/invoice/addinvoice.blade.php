@@ -162,34 +162,30 @@
                 calculateVAT();
             });
         });
-        $('select[name="section_id"]').on('change', function() {
-    var SectionId = $(this).val();
+       $('select[name="section_id"]').on('change', function() {
+            var sectionId = $(this).val();
 
-    if (SectionId) {
-        $.ajax({
-    url: "{{ URL::to('section') }}/" + SectionId,
-    type: "GET",
-    dataType: "json",
-    success: function(data) {
-        console.log(data);  // تحقق من البيانات المستلمة
-        if (data.message) {
-            console.log(data.message);  // في حالة وجود رسالة خطأ من الـ Controller
-        } else {
-            $('select[name="product"]').empty();
-            $.each(data, function(key, value) {
-                $('select[name="product"]').append(
-                    '<option value="' + key + '">' + value + '</option>'
-                );
-            });
-        }
-    },
-    error: function(xhr, status, error) {
-        console.log("Error: " + error);  // تحقق من أي أخطاء في الاتصال
-    }
-});
+            if (sectionId) {
+                $.ajax({
+                    url: "{{ url('get-products') }}/" + sectionId,
+                    type: "GET",
+                    dataType: "json",
+                    success: function(data) {
+                        var $productSelect = $('select[name="product"]');
+                        $productSelect.empty();
+                        $productSelect.append('<option selected disabled>اختر المنتج</option>');
+                        
+                        $.each(data, function(key, value) {
+                            $productSelect.append('<option value="' + key + '">' + value + '</option>');
+                        });
+                    },
+                    error: function(xhr) {
+                        console.log('حدث خطأ أثناء جلب المنتجات');
+                    }
+                });
+            }
+        });
 
-    }
-});
 
 
 

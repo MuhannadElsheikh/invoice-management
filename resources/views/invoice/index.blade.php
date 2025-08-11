@@ -69,8 +69,14 @@
                                 <th class="wd-10p border-bottom-0">الإجمالي </th>
                                 <th class="wd-10p border-bottom-0">الحالة</th>
                                 <th class="wd-25p border-bottom-0">ملاحظات</th>
-                                @canany(['تعديل فاتورة ', 'طباعة فاتورة', 'تغير حالة الدفع ', 'حذف فاتورة ', 'ارشفة
-                                    فاتورة'])
+                                @canany([
+                                    'تعديل فاتورة ',
+                                    'طباعة فاتورة',
+                                    'تغير حالة الدفع ',
+                                    'حذف فاتورة ',
+                                    'ارشفة
+                                    فاتورة',
+                                    ])
                                     <th class="wd-25p border-bottom-0">العمليات </th>
                                 @endcanany
                             </tr>
@@ -82,7 +88,8 @@
                                     <td>{{ $item->invoice_number }}</td>
                                     <td> {{ $item->invoice_date }}</td>
                                     <td>{{ $item->due_date }}</td>
-                                    <td>{{ $item->product }}</td>
+                                    <td>{{ $item->productData->product_name ?? '—' }}</td>
+
                                     <td><a
                                             href="{{ url('invoicedetalls') }}/{{ $item->id }}">{{ $item->section->section_name }}</a>
                                     </td>
@@ -100,8 +107,14 @@
                                         @endif
                                     </td>
                                     <td>{{ $item->note }}</td>
-                                    @canany(['تعديل فاتورة ', 'طباعة فاتورة', 'تغير حالة الدفع ', 'حذف فاتورة ', 'ارشفة
-                                        فاتورة'])
+                                    @canany([
+                                        'تعديل فاتورة ',
+                                        'طباعة فاتورة',
+                                        'تغير حالة الدفع ',
+                                        'حذف فاتورة ',
+                                        'ارشفة
+                                        فاتورة',
+                                        ])
                                         <td>
                                             <div class="dropdown">
                                                 <button aria-expanded="false" aria-haspopup="true"

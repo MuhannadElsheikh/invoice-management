@@ -63,8 +63,8 @@
                             <div class="col">
                                 <label for="product">المنتج</label>
                                 <select name="product" id="product" class="form-control "
-                                    value="{{ $invoices->product }}">
-
+                                    value="{{ $invoices->productData->product_name }}">
+                                                
                                 </select>
                             </div>
 

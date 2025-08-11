@@ -20,7 +20,8 @@
     <!-- breadcrumb -->
 @endsection
 @section('content')
-    <!-- row opened --> @if (session('success'))
+    <!-- row opened -->
+    @if (session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
         </div>
@@ -73,7 +74,8 @@
 
                                                     <tr>
                                                         <th scope="row"> المنتج</th>
-                                                        <td>{{ $invoice->product }}</td>
+                                                        <td>{{ $invoice->productData->product_name ?? '—' }}</td>
+
                                                         <th scope="row"> مبلغ التحصيل </th>
                                                         <td>{{ $invoice->amount_collection }}</td>
                                                         <th scope="row"> مبلغ العمولة </th>
@@ -152,17 +154,19 @@
                                             <div class="row mt-3">
                                                 <div class="col">
                                                     <label>المرفقات</label> @can('اضافة مرفق ')
-                                                    <form action="{{url('invoicedetalls')}}" method="post" enctype="multipart/form-data">
-                                                        @csrf
-                                                        <input type="hidden" name="invoice_id"
-                                                            value="{{ $item->id }}">
-                                                        <input type="hidden" name="invoice_number"
-                                                            value="{{ $item->invoice_number }}">
-                                                        <input type="file" name="pic" class="dropify"
-                                                            accept=".pdf,.jpeg,.jpg,.png" data-height="70">
-                                                        <input type="submit" value="رفع مرفق "
-                                                            class="btn btn-outline-info btn-sm">
-                                                    </form>     @endcan
+                                                        <form action="{{ url('invoicedetalls') }}" method="post"
+                                                            enctype="multipart/form-data">
+                                                            @csrf
+                                                            <input type="hidden" name="invoice_id"
+                                                                value="{{ $item->id }}">
+                                                            <input type="hidden" name="invoice_number"
+                                                                value="{{ $item->invoice_number }}">
+                                                            <input type="file" name="pic" class="dropify"
+                                                                accept=".pdf,.jpeg,.jpg,.png" data-height="70">
+                                                            <input type="submit" value="رفع مرفق "
+                                                                class="btn btn-outline-info btn-sm">
+                                                        </form>
+                                                    @endcan
                                                     <p class="text-danger mt-2">* صيغة المرفق: pdf, jpeg, jpg, png</p>
                                                 </div>
                                             </div>
@@ -187,16 +191,17 @@
                                                                 <a href="{{ url('print_file') }}/{{ $x->invoice_number }}/{{ $x->file_name }}"
                                                                     class="btn btn-outline-info btn-sm" role="button">تحميل
                                                                 </a>
-                                                                @can( 'حذف  مرفق ')
-                                                                <button class=" btn-sm btn btn-outline-danger"
-                                                                    data-toggle="modal"
-                                                                    data-file_name="{{ $x->file_name }}"
-                                                                    data-invoice_number="{{ $x->invoice_number }}"
-                                                                    data-file_id="{{ $x->id }}"
-                                                                    data-target="#delete_file"
-                                                                    data-bs-target="#deleteModal">
-                                                                    حذف
-                                                                </button>    @endcan
+                                                                @can('حذف مرفق ')
+                                                                    <button class=" btn-sm btn btn-outline-danger"
+                                                                        data-toggle="modal"
+                                                                        data-file_name="{{ $x->file_name }}"
+                                                                        data-invoice_number="{{ $x->invoice_number }}"
+                                                                        data-file_id="{{ $x->id }}"
+                                                                        data-target="#delete_file"
+                                                                        data-bs-target="#deleteModal">
+                                                                        حذف
+                                                                    </button>
+                                                                @endcan
                                                             </td>
                                                         </tr>
                                                     @endforeach

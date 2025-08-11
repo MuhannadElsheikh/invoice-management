@@ -47,7 +47,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::resource('invoice', InvoicesController::class);
 Route::resource('section', SectionsController::class);
 Route::resource('product', ProductController::class);
-Route::get('/section/{id}', [InvoicesController::class, 'getProducts']);
+// Route::get('/section/{id}', [InvoicesController::class, 'getProducts']);
 Route::get('invoicedetalls/{id}', [InvoicesDetalisController::class, 'index']);
 Route::post('invoicedetalls', [InvoicesDetalisController::class, 'store']);
 Route::post('detalis',[InvoicesDetalisController::class,'destroy'])->name('detalis');
@@ -66,6 +66,7 @@ Route::get('export_invoices', [InvoicesController::class, 'export']);
 Route::get('invoices_report', [InvoicesController::class, 'report']);
 Route::post('search_invoices', [InvoicesController::class, 'search_invoices'])->name('search_invoices');
 Route::get('mark_all', [InvoicesController::class, 'mark_all'])->name('mark_all');
+Route::get('/get-products/{section_id}', [InvoicesController::class, 'getProducts']);
 
 
 Route::get('/{page}', [AdminController::class,'index']);

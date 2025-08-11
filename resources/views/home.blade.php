@@ -142,7 +142,7 @@
 
     <!-- row opened -->
 
-        <div class="col-lg-12 col-xl-5">
+        <div class="col-lg-12 col-xl-12">
 
             <div class="card card-dashboard-map-one">
                 <label class="main-content-label">Sales Revenue by Customers in USA</label>
