@@ -42,6 +42,9 @@
                         <span class="side-menu__label">الفواتير</span><i class="angle fe fe-chevron-down"></i></a>
                 @endcan
                 <ul class="slide-menu">
+                      @can('اضافة فاتورة')
+                        <li><a class="slide-item" href=" {{ route('invoice.create') }}">إضافة فاتورة </a></li>
+                    @endcan
                     @can('قائمة الفواتير')
                         <li><a class="slide-item" href="{{ url('/' . ($page = 'invoice')) }}">قائمة الفواتير </a></li>
                     @endcan
