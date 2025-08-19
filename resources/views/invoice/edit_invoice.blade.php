@@ -24,7 +24,8 @@
         <div class="col-lg-12 col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('invoice.update', ['invoice' => $invoices->id])  }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('invoice.update', ['invoice' => $invoices->id]) }}" method="post"
+                        enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="row">
@@ -62,10 +63,14 @@
 
                             <div class="col">
                                 <label for="product">المنتج</label>
-                                <select name="product" id="product" class="form-control "
-                                    value="{{ $invoices->productData->product_name }}">
-                                                
+                                <select name="product" id="product" class="form-control">
+                                    @if ($invoices->productData)
+                                        <option value="{{ $invoices->product }}" selected>
+                                            {{ $invoices->productData->product_name }}
+                                        </option>
+                                    @endif
                                 </select>
+
                             </div>
 
                             <div class="col">
@@ -147,38 +152,50 @@
             $('#rate_vat, #amount_commission, #discount').on('input', function() {
                 calculateVAT();
             });
-        });
-        $('select[name="section_id"]').on('change', function() {
-            var SectionId = $(this).val();
 
-            if (SectionId) {
-                $.ajax({
-                    url: "{{ URL::to('section') }}/" + SectionId,
-                    type: "GET",
-                    dataType: "json",
-                    success: function(data) {
-                        console.log(data); // تحقق من البيانات المستلمة
-                        if (data.message) {
-                            console.log(data.message); // في حالة وجود رسالة خطأ من الـ Controller
-                        } else {
-                            $('select[name="product"]').empty();
-                            $.each(data, function(key, value) {
-                                $('select[name="product"]').append(
-                                    '<option value="' + key + '">' + value + '</option>'
-                                );
-                            });
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.log("Error: " + error); // تحقق من أي أخطاء في الاتصال
-                    }
-                });
+            // عند تغيير القسم
+            $('select[name="section_id"]').on('change', function() {
+                loadProducts($(this).val(), null);
+            });
 
+            // في حالة تعديل الفاتورة
+            var sectionId = $('#section_id').val();
+            var productId = "{{ old('product', $invoices->product ?? '') }}"; // هنا تحط المنتج المحفوظ
+            if (sectionId) {
+                loadProducts(sectionId, productId);
             }
         });
 
+        // دالة تحميل المنتجات
+        function loadProducts(sectionId, selectedProduct) {
+            if (sectionId) {
+                $.ajax({
+                    url: "{{ url('get-products') }}/" + sectionId,
+                    type: "GET",
+                    dataType: "json",
+                    success: function(data) {
+                        var $productSelect = $('select[name="product"]');
+                        $productSelect.empty();
+                        $productSelect.append('<option disabled>اختر المنتج</option>');
 
+                        $.each(data, function(key, value) {
+                            if (selectedProduct && selectedProduct == key) {
+                                $productSelect.append('<option value="' + key + '" selected>' + value +
+                                    '</option>');
+                            } else {
+                                $productSelect.append('<option value="' + key + '">' + value +
+                                    '</option>');
+                            }
+                        });
+                    },
+                    error: function(xhr) {
+                        console.log('حدث خطأ أثناء جلب المنتجات');
+                    }
+                });
+            }
+        }
 
+        // دالة حساب الضريبة
         function calculateVAT() {
             var discount = parseFloat($('#discount').val()) || 0;
             var amount_commission = parseFloat($('#amount_commission').val()) || 0;

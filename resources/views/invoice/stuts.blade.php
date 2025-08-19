@@ -64,10 +64,14 @@
 
                             <div class="col">
                                 <label for="product">المنتج</label>
-                                <select name="product" id="product" class="form-control " value="{{ $stuts->product }}"
-                                    readonly>
+                           <select name="product" id="product" class="form-control" readonly>
+    @if($stuts->productData)
+        <option value="{{ $stuts->product }}" selected>
+            {{ $stuts->productData->product_name }}
+        </option>
+    @endif
+</select>
 
-                                </select>
                             </div>
 
                             <div class="col">
